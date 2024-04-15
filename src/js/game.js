@@ -34,7 +34,7 @@ let exit = {
     x: cols - 1,
     y: rows - 1,
     size: cellSize,
-    color: 'green'
+    color: 'blue'
 };
 
 function carvePassagesFrom(x, y) {
@@ -75,8 +75,10 @@ function drawMaze() {
 }
 
 function drawPlayer() {
+    var background = new Image();
+    background.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpr9mKvegQ7ibIh5fbFkZHmkiGTs_U42GvJjizL-SEJg&s";
     ctx.fillStyle = player.color;
-    ctx.fillRect(player.x * cellSize + (cellSize - player.size) / 2, player.y * cellSize + (cellSize - player.size) / 2, player.size, player.size);
+    ctx.drawImage(background, player.x * cellSize + (cellSize - player.size) / 2, player.y * cellSize + (cellSize - player.size) / 2, player.size, player.size);
 }
 
 function drawExit() {
@@ -98,9 +100,15 @@ function movePlayer(dx, dy) {
 }
 
 function checkWin() {
+    console.log("win")
     if (player.x === exit.x && player.y === exit.y) {
+        
         localStorage.getItem('lifetimeScore') ? localStorage.setItem('lifetimeScore', parseInt(localStorage.getItem('lifetimeScore')) + 1) : localStorage.setItem('lifetimeScore', 1);
-        alert("Congratulations, you've escaped the maze! Now we dare you to do it again! FYI, your lifetime score is currently: " + localStorage.getItem('lifetimeScore'));
+        if (localStorage.getItem('lifetimeScore') >= 3) {
+            alert("Test");
+        } else {
+            alert("Congratulations, you've escaped the maze! Now we dare you to do it again! FYI, your lifetime score is currently: " + localStorage.getItem('lifetimeScore'));
+        }
         window.location.reload();
     }
 }
