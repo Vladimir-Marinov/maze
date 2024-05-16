@@ -1,5 +1,4 @@
 document.getElementById('regenerateMaze').addEventListener('click', () => {
-    localStorage.getItem('lifetimeScore') ? localStorage.setItem('lifetimeScore', parseInt(localStorage.getItem('lifetimeScore')) - 1) : localStorage.setItem('lifetimeScore', 0);
     window.location.reload();
 });
 
@@ -8,11 +7,26 @@ document.getElementById('lifetimeScore').innerText = localStorage.getItem('lifet
 const canvas = document.getElementById('mazeCanvas');
 const ctx = canvas.getContext('2d');
 
-canvas.width = 800;
-canvas.height = 600;
+const score = parseInt(localStorage.getItem('lifetimeScore')) 
+let rows = 0;
+let cols = 0;
+if (score >= 2) {
+    canvas.width = 840;
+    canvas.height = 840;
+    rows = 21
+    cols = 21
+} else if (score == 1) {
+    canvas.width = 600;
+    canvas.height = 600;
+    rows = 15
+    cols = 15
+} else {
+    canvas.width = 440;
+    canvas.height = 440;
+    rows = 11
+    cols = 11
+}
 
-const rows = 15;
-const cols = 20;
 const cellSize = canvas.width / cols;
 const maze = [];
 
@@ -105,9 +119,11 @@ function checkWin() {
         
         localStorage.getItem('lifetimeScore') ? localStorage.setItem('lifetimeScore', parseInt(localStorage.getItem('lifetimeScore')) + 1) : localStorage.setItem('lifetimeScore', 1);
         if (localStorage.getItem('lifetimeScore') >= 3) {
-            alert("Test");
-        } else {
-            alert("Congratulations, you've escaped the maze! Now we dare you to do it again! FYI, your lifetime score is currently: " + localStorage.getItem('lifetimeScore'));
+            alert("Where our first kiss was a bit amiss,\nSearch there, it's not a place you'd miss.\nA keyhole waits, for your key's bliss,\nUnlock the secret, reveal what's beneath this.");
+        } else if (localStorage.getItem('lifetimeScore') == 2) {
+            alert("Congratulations, you've escaped the second maze! One more left, do you take the chanllenge?");
+        } else if (localStorage.getItem('lifetimeScore') == 1) {
+            alert("Congratulations, you've escaped the first maze! Now we dare you to do it again!");
         }
         window.location.reload();
     }
